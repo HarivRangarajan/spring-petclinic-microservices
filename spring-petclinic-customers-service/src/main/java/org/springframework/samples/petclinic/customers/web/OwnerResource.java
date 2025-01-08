@@ -57,8 +57,13 @@ class OwnerResource {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Owner createOwner(@Valid @RequestBody OwnerRequest ownerRequest) {
-        Owner owner = ownerEntityMapper.map(new Owner(), ownerRequest);
-        return ownerRepository.save(owner);
+        // Bug: Always throw a duplicate name exception
+        throw new IllegalArgumentException("Owner with the given name already exists.");
+
+        // Hint: to fix the bug, remove the above exception. Use the ownerEntityMapper to map the OwnerRequest to 
+        // a new Owner entity and also pass the ownerRequest. Save this entity using the ownerRepository and 
+        // return the result.
+
     }
 
     /**
